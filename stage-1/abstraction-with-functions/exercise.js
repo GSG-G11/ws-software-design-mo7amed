@@ -40,14 +40,13 @@ const capatliseValues = (str) => {
 const increment = (n) => {
     return n + 1
 }
-const reverse = (str) => {
+const reverseStr = (str) => {
     return str.split('').reverse().join('');
 }
 
 const capitaliseObjectKeys = (input) => {
     return genericKeys(input, capatlise);
 }
-
 
 const capitaliseObjectValues = (input) => {
     return genericVal(input, capatliseValues);
@@ -58,7 +57,7 @@ const incrementObjectValues = (input) => {
 }
 
 const reverseObjectKeys = (input) => {
-    return genericKeys(input, reverse);
+    return genericKeys(input, reverseStr);
 
 }
 
