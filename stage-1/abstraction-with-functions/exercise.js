@@ -18,54 +18,56 @@
  *   function to encapsulate it, instead of repeating code in several places.
  */
 'use strict';
-
-function capitaliseObjectKeys (input) {
+function capitalisedAnything(input, callback) {
   const keys = Object.keys(input);
-  const result = {};
 
   for (var ii = 0; ii < keys.length; ii++) {
-    const capitalisedKey = keys[ii].slice(0, 1).toUpperCase().concat(keys[ii].slice(1));
-    result[capitalisedKey] = input[keys[ii]];
+    callback(keys[ii]);
   }
 
+}
+
+function capitaliseObjectKeys(input) {
+  const result = {};
+  capitalisedAnything(input, (key) => {
+    const capitalisedKey = key.slice(0, 1).toUpperCase().concat(key.slice(1));
+    result[capitalisedKey] = input[key];
+  })
   return result;
 }
 
 
-function capitaliseObjectValues (input) {
-  const keys = Object.keys(input);
-  const result = {};
 
-  for (var ii = 0; ii < keys.length; ii++) {
-    const value = input[keys[ii]];
+function capitaliseObjectValues(input) {
+  const result = {};
+  capitalisedAnything(input, (key) => {
+    const value = input[key];
     const capitalisedValue = value.slice(0, 1).toUpperCase().concat(value.slice(1));
-    result[keys[ii]] = capitalisedValue;
-  }
+    result[key] = capitalisedValue;
+  })
+  return result;
 
+}
+
+
+
+
+
+function incrementObjectValues(input) {
+  const result = {};
+  capitalisedAnything(input, (key) => {
+    const value = input[key];
+    result[key] = value + 1;
+  })
   return result;
 }
 
-function incrementObjectValues (input) {
-  const keys = Object.keys(input);
-  const result = {};
-
-  for (var ii = 0; ii < keys.length; ii++) {
-    const value = input[keys[ii]];
-    result[keys[ii]] = value + 1;
-  }
-
-  return result;
-}
-
-function reverseObjectKeys (input) {
-  const keys = Object.keys(input);
-  const result = {};
-
-  for (var ii = 0; ii < keys.length; ii++) {
-    const reversedKey = keys[ii].split('').reverse().join('');
-    result[reversedKey] = input[keys[ii]];
-  }
-
+function reverseObjectKeys(input) {
+   const result = {};
+  capitalisedAnything(input, (key) => {
+    const reversedKey = key.split('').reverse().join('');
+    result[reversedKey] = input[key];
+  })
   return result;
 }
 
