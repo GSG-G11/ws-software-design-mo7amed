@@ -19,15 +19,23 @@
  */
 'use strict';
 
+function capitalise (array, res, inputed) {
+  let capitalised = array.map(ele => {
+    const capitalisedKey = ele.slice(0, 1).toUpperCase().concat(ele.slice(1));
+    res[capitalisedKey] = inputed[ele];
+  })
+  return capitalised
+}
+
 function capitaliseObjectKeys (input) {
   const keys = Object.keys(input);
   const result = {};
 
-  for (var ii = 0; ii < keys.length; ii++) {
-    const capitalisedKey = keys[ii].slice(0, 1).toUpperCase().concat(keys[ii].slice(1));
-    result[capitalisedKey] = input[keys[ii]];
-  }
-
+  // for (var ii = 0; ii < keys.length; ii++) {
+  //   const capitalisedKey = keys[ii].slice(0, 1).toUpperCase().concat(keys[ii].slice(1));
+  //   result[capitalisedKey] = input[keys[ii]];
+  // }
+  capitalise (keys, result, input)
   return result;
 }
 
@@ -36,12 +44,13 @@ function capitaliseObjectValues (input) {
   const keys = Object.keys(input);
   const result = {};
 
-  for (var ii = 0; ii < keys.length; ii++) {
-    const value = input[keys[ii]];
-    const capitalisedValue = value.slice(0, 1).toUpperCase().concat(value.slice(1));
-    result[keys[ii]] = capitalisedValue;
-  }
-
+  // for (var ii = 0; ii < keys.length; ii++) {
+  //   const value = input[keys[ii]];
+  //   const capitalisedValue = value.slice(0, 1).toUpperCase().concat(value.slice(1));
+  //   result[keys[ii]] = capitalisedValue;
+  // }
+  const value = input[keys[ii]];
+  capitalise (value, result, input)
   return result;
 }
 
