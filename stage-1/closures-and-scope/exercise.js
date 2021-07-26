@@ -21,6 +21,7 @@ var inc = 1;
  */
 function increment (n) {
   // fill in ...
+   return ++n;
 }
 
 
@@ -35,6 +36,9 @@ function increment (n) {
  */
 function createIncrementer (base) {
   // fill in ...
+  return (num)=>{
+    return base + num
+  }
 }
 
 
@@ -53,6 +57,21 @@ function createIncrementer (base) {
  */
 function createCounter () {
   // fill in ...
+  const count = 0;
+  function read (){
+    return  count
+  }
+  function inc(){
+    return ++count
+  }
+  function dec(){
+    return --count
+  }
+  return {
+    read,
+    inc,
+    dec
+  }
 }
 
 

@@ -18,34 +18,37 @@
  *   function to encapsulate it, instead of repeating code in several places.
  */
 'use strict';
-
-function capitaliseObjectKeys (input) {
-  const keys = Object.keys(input);
-  const result = {};
-
-  for (var ii = 0; ii < keys.length; ii++) {
-    const capitalisedKey = keys[ii].slice(0, 1).toUpperCase().concat(keys[ii].slice(1));
-    result[capitalisedKey] = input[keys[ii]];
+// function to convert first letter of each word to upper case
+function capitaliseFirstLetter(value) {
+  return value.slice(0, 1).toUpperCase().concat(value.slice(1));
+}
+// capitalise Object  for key or value 
+function capitaliseObject(which) {
+  return (input) => {
+    const keys = Object.keys(input);
+    const result = {};
+    if (which === 'keys') {
+      for (var ii = 0; ii < keys.length; ii++) {
+        const capitalisedKey = capitaliseFirstLetter(keys[ii]);
+        result[capitalisedKey] = input[keys[ii]];
+      }
+    } else {
+      for (var ii = 0; ii < keys.length; ii++) {
+        const value = input[keys[ii]];
+        const capitalisedValue = capitaliseFirstLetter(value);
+        result[keys[ii]] = capitalisedValue;
+      }
+    }
+    return result;
   }
-
-  return result;
 }
 
+const capitaliseObjectKeys = capitaliseObject('keys');
+const capitaliseObjectValues = capitaliseObject('values');
 
-function capitaliseObjectValues (input) {
-  const keys = Object.keys(input);
-  const result = {};
+// end 
 
-  for (var ii = 0; ii < keys.length; ii++) {
-    const value = input[keys[ii]];
-    const capitalisedValue = value.slice(0, 1).toUpperCase().concat(value.slice(1));
-    result[keys[ii]] = capitalisedValue;
-  }
-
-  return result;
-}
-
-function incrementObjectValues (input) {
+function incrementObjectValues(input) {
   const keys = Object.keys(input);
   const result = {};
 
@@ -57,7 +60,7 @@ function incrementObjectValues (input) {
   return result;
 }
 
-function reverseObjectKeys (input) {
+function reverseObjectKeys(input) {
   const keys = Object.keys(input);
   const result = {};
 
@@ -68,10 +71,3 @@ function reverseObjectKeys (input) {
 
   return result;
 }
-
-module.exports = {
-  capitaliseObjectKeys,
-  capitaliseObjectValues,
-  incrementObjectValues,
-  reverseObjectKeys,
-};
