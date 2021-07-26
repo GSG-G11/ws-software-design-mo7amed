@@ -8,8 +8,7 @@
  *   npm run s1.closures
  * This will run a series of tests which should all pass.
  */
-'use strict';
-
+"use strict";
 
 var inc = 1;
 
@@ -19,10 +18,9 @@ var inc = 1;
  *
  * increment(2); // returns 3
  */
-function increment (n) {
-  // fill in ...
+function increment(n) {
+  return inc + n;
 }
-
 
 /*
  * This function should return a function that increments its argument by
@@ -33,10 +31,12 @@ function increment (n) {
  * incBy3(2); // returns 5
  * incBy2(2); // returns 4
  */
-function createIncrementer (base) {
-  // fill in ...
+function createIncrementer(base) {
+  const sub = (num) => {
+    return num + base;
+  };
+  return sub;
 }
-
 
 /*
  * This function should return an object that represents a counter and contains
@@ -51,10 +51,20 @@ function createIncrementer (base) {
  * counter.dec()
  * counter.read() // returns 0
  */
-function createCounter () {
-  // fill in ...
+function createCounter() {
+  let counter = 0;
+  return {
+    inc: () => {
+      return ++counter;
+    },
+    dec: () => {
+      return --counter;
+    },
+    read: () => {
+      return counter;
+    },
+  };
 }
-
 
 module.exports = {
   increment,
