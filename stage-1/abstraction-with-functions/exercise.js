@@ -58,11 +58,13 @@ function incrementObjectValues (input) {
   const keys = Object.keys(input);
   const result = {};
 
-  for (var ii = 0; ii < keys.length; ii++) {
-    const value = input[keys[ii]];
-    result[keys[ii]] = value + 1;
-  }
-
+  // for (var ii = 0; ii < keys.length; ii++) {
+  //   const value = input[keys[ii]];
+  //   result[keys[ii]] = value + 1;
+  // }
+keys.forEach(key => {
+  result.key = input.key +1
+})
   return result;
 }
 
