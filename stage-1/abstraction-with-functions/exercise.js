@@ -18,56 +18,46 @@
  *   function to encapsulate it, instead of repeating code in several places.
  */
 'use strict';
-
-function capitaliseObjectKeys (input) {
+function mainFunc(input,cb){
   const keys = Object.keys(input);
   const result = {};
 
   for (var ii = 0; ii < keys.length; ii++) {
-    const capitalisedKey = keys[ii].slice(0, 1).toUpperCase().concat(keys[ii].slice(1));
-    result[capitalisedKey] = input[keys[ii]];
+    cb(ii,keys,result)
   }
-
   return result;
+}
+
+function capitaliseObjectKeys (input) {
+
+  return mainFunc(input,(ii,keys,result) =>{
+      const capitalisedKey = keys[ii].slice(0, 1).toUpperCase().concat(keys[ii].slice(1));
+      result[capitalisedKey] = input[keys[ii]];
+  });
 }
 
 
 function capitaliseObjectValues (input) {
-  const keys = Object.keys(input);
-  const result = {};
-
-  for (var ii = 0; ii < keys.length; ii++) {
+  return mainFunc(input,(ii,keys,result) =>{
     const value = input[keys[ii]];
     const capitalisedValue = value.slice(0, 1).toUpperCase().concat(value.slice(1));
-    result[keys[ii]] = capitalisedValue;
-  }
-
-  return result;
+    result[keys[ii]] = capitalisedValue;})
 }
 
+
+
 function incrementObjectValues (input) {
-  const keys = Object.keys(input);
-  const result = {};
-
-  for (var ii = 0; ii < keys.length; ii++) {
+  return mainFunc(input,(ii,keys,result) =>{
     const value = input[keys[ii]];
-    result[keys[ii]] = value + 1;
-  }
-
-  return result;
+    result[keys[ii]] = value + 1;})
 }
 
 function reverseObjectKeys (input) {
-  const keys = Object.keys(input);
-  const result = {};
-
-  for (var ii = 0; ii < keys.length; ii++) {
+  return mainFunc(input,(ii,keys,result) =>{
     const reversedKey = keys[ii].split('').reverse().join('');
-    result[reversedKey] = input[keys[ii]];
-  }
-
-  return result;
+    result[reversedKey] = input[keys[ii]];})
 }
+
 
 module.exports = {
   capitaliseObjectKeys,
