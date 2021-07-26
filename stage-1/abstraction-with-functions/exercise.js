@@ -19,54 +19,53 @@
  */
 'use strict';
 
-function capitaliseObjectKeys (input) {
+const genericFunction = (input,callback) => {
   const keys = Object.keys(input);
   const result = {};
-
-  for (var ii = 0; ii < keys.length; ii++) {
-    const capitalisedKey = keys[ii].slice(0, 1).toUpperCase().concat(keys[ii].slice(1));
-    result[capitalisedKey] = input[keys[ii]];
-  }
-
-  return result;
+  callback(keys,result,input);
+  return result
 }
 
+function capitalisedKey(keys,result,input){
+  keys.forEach((key) => {
+    const capitalisedKey =key.slice(0, 1).toUpperCase().concat(key.slice(1));
+    result[capitalisedKey] =  input[key];
+  })
+}
 
-function capitaliseObjectValues (input) {
-  const keys = Object.keys(input);
-  const result = {};
-
-  for (var ii = 0; ii < keys.length; ii++) {
-    const value = input[keys[ii]];
+function capitalisedValues (keys,result,input) {
+  keys.forEach((key) => {
+    const value = input[key];
     const capitalisedValue = value.slice(0, 1).toUpperCase().concat(value.slice(1));
-    result[keys[ii]] = capitalisedValue;
-  }
-
-  return result;
+    result[key] = capitalisedValue;
+  })
 }
 
+function incrementValues (keys,result,input) {
+  keys.forEach((key)=> {
+    const value = input[key];
+    result[key] = value + 1;
+  }) 
+}
+
+function reverseKeys (keys,result,input) {
+  keys.forEach((key) => {
+    const reversedKey = key.split('').reverse().join('');
+    result[reversedKey] = input[key];
+  })
+}
+
+function capitaliseObjectKeys (input) {
+  return genericFunction(input,capitalisedKey)
+}
+function capitaliseObjectValues (input) {
+  return genericFunction(input,capitalisedValues)
+}
 function incrementObjectValues (input) {
-  const keys = Object.keys(input);
-  const result = {};
-
-  for (var ii = 0; ii < keys.length; ii++) {
-    const value = input[keys[ii]];
-    result[keys[ii]] = value + 1;
-  }
-
-  return result;
+  return genericFunction(input,incrementValues)
 }
-
 function reverseObjectKeys (input) {
-  const keys = Object.keys(input);
-  const result = {};
-
-  for (var ii = 0; ii < keys.length; ii++) {
-    const reversedKey = keys[ii].split('').reverse().join('');
-    result[reversedKey] = input[keys[ii]];
-  }
-
-  return result;
+  return genericFunction(input,reverseKeys)
 }
 
 module.exports = {
