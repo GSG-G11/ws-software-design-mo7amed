@@ -13,79 +13,52 @@
  */
 'use strict';
 
-document.querySelector('#form-unanswered').addEventListener('submit', function (e) {
-  e.preventDefault();
-
-  var form = e.target;
-  var tags = form.querySelector('input[name=tags]').value;
-  var url  = 'https://api.stackexchange.com/2.2/questions/unanswered?order=desc&sort=activity&site=stackoverflow&tagged=' + tags;
-
-  var xhr = new XMLHttpRequest();
-
-  xhr.addEventListener('load', function () {
-    if (xhr.status === 200) {
-      var response = JSON.parse(xhr.responseText);
-
-      document.querySelector('#results-summary').innerHTML = ''
-        + '<p>'
-        + 'Query of ' + tags +  ' returned ' + response.items.length + ' results'
-        + '</p>';
-
-      document.querySelector('#results-body').innerHTML = response.items.map(function (item) {
-        return ''
-          + '<div>'
-          + '<p>Title: ' + item.title + '</p>'
-          + '<p>Date: ' + new Date(item.creation_date) + '</p>'
-          + '<p>Link: <a href="' + item.link + '">Click here</a></p>'
-          + '<p>Owner: ' + item.owner.display_name + '</p>'
-          + '</div>'
-      })
-      .join('<br>');
-
-    } else {
-      console.log('Status Code: ' + xhr.status);
-    }
-  });
-
-  xhr.open('GET', url);
-  xhr.send();
-});
-
-
+document.querySelector('#form-unanswered').addEventListener('submit', function(e){
+  viewData(e,'https://api.stackexchange.com/2.2/questions/unanswered?order=desc&sort=activity&site=stackoverflow&tagged=',"")
+})
 document.querySelector('#form-answerers').addEventListener('submit', function (e) {
+  viewData(e,'http://api.stackexchange.com/2.2/tags/','/top-answerers/all_time?site=stackoverflow')
+})
+
+function viewData(e,url1,url2){
   e.preventDefault();
+  const form = e.target;
+  const tags = form.querySelector('input[name=tags]').value;
+  const url  = url1 + tags + url2;
+  requestAPI(viewUnanswered,url,tags)
+}
 
-  var form = e.target;
-  var tag  = form.querySelector('input[name=tags]').value;
-  var url  = 'http://api.stackexchange.com/2.2/tags/' + tag + '/top-answerers/all_time?site=stackoverflow'
-
-  var xhr = new XMLHttpRequest();
-
+function requestAPI(cb, url,tags){
+  const xhr = new XMLHttpRequest();
   xhr.addEventListener('load', function () {
     if (xhr.status === 200) {
       var response = JSON.parse(xhr.responseText);
-
       document.querySelector('#results-summary').innerHTML = ''
         + '<p>'
         + 'Query of ' + tags +  ' returned ' + response.items.length + ' results'
         + '</p>';
-
-      document.querySelector('#results-body').innerHTML = response.items.map(function (item) {
-        return ''
-          + '<div>'
-          + '<p>User: ' + item.user.display_name + '</p>'
-          + '<p>Reputation: ' + item.user.reputation + '</p>'
-          + '<p>Profile: <a href="' + item.user.link + '">Click here</a></p>'
-          + '<p>Score: ' + item.score + '</p>'
-          + '</div>'
-      })
-      .join('<br>');
-
-    } else {
+     } else {
       console.log('Status Code: ' + xhr.status);
     }
-  });
+    document.querySelector('#results-body').innerHTML = response.items.map(cb).join('<br>')})
+      
+    xhr.open('GET', url);
+    xhr.send();
+}
 
-  xhr.open('GET', url);
-  xhr.send();
-});
+function viewUnanswered(item){
+  return `<div>
+  <p>Title: ${item.title} </p>
+  <p>Date:  ${new Date(item.creation_date)} </p>
+  <p>Link: <a href=" ${item.link} ">Click here</a></p>
+  <p>Owner: ${item.owner.display_name} </p>
+  </div>`
+} 
+function viewAnswered(item){
+  return `<div>
+  <p>User: ${item.user.display_name} </p>
+  <p>Reputation:  ${item.user.reputation} </p>
+  <p>Profile:  <a href=" ${item.user.link} ">Click here</a></p>
+  <p>Score: ${item.score} </p>
+  </div>`
+}
