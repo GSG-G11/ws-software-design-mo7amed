@@ -10,7 +10,7 @@
     "s1.functions": "tape './stage-1/abstraction-with-functions/exercise.test.js' | tap-spec",
     "s2": "tape './stage-2/**/*.test.js' | tap-spec",
     "s2.modules": "tape './stage-2/module-pattern/exercise.test.js' | tap-spec",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --watch"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,7 @@
   "homepage": "https://github.com/foundersandcoders/workshop-client-side-design#readme",
   "dependencies": {},
   "devDependencies": {
+    "jest": "^27.0.6",
     "tap-spec": "^4.1.1",
     "tape": "^4.7.0"
   }

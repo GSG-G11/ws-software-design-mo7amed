@@ -19,12 +19,20 @@
  */
 'use strict';
 
+function capitalise(str){
+   str.slice(0, 1).toUpperCase().concat(str.slice(1));
+}
+function reverseStr(str){
+  str.split('').reverse().join('');
+}
+
+
 function capitaliseObjectKeys (input) {
+  
   const keys = Object.keys(input);
   const result = {};
-
   for (var ii = 0; ii < keys.length; ii++) {
-    const capitalisedKey = keys[ii].slice(0, 1).toUpperCase().concat(keys[ii].slice(1));
+    const capitalisedKey = capitalise(keys[ii])
     result[capitalisedKey] = input[keys[ii]];
   }
 
@@ -37,8 +45,7 @@ function capitaliseObjectValues (input) {
   const result = {};
 
   for (var ii = 0; ii < keys.length; ii++) {
-    const value = input[keys[ii]];
-    const capitalisedValue = value.slice(0, 1).toUpperCase().concat(value.slice(1));
+    const capitalisedValue =  capitalise(input[keys[ii]])
     result[keys[ii]] = capitalisedValue;
   }
 
@@ -62,7 +69,7 @@ function reverseObjectKeys (input) {
   const result = {};
 
   for (var ii = 0; ii < keys.length; ii++) {
-    const reversedKey = keys[ii].split('').reverse().join('');
+    const reversedKey = reverseStr(keys[ii])
     result[reversedKey] = input[keys[ii]];
   }
 
