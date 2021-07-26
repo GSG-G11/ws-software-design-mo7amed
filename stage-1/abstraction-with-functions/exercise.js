@@ -18,60 +18,53 @@
  *   function to encapsulate it, instead of repeating code in several places.
  */
 'use strict';
+const genericKeys = (input, func) => {
+    return Object.keys(input).
+    map((i) => {
+        return func(i);
+    });
+}
+const genericVal = (input, func) => {
+    const keys = Object.keys(input);
+    return keys.
+    map((i) => {
+        return func(keys[i]);
+    });
+}
+const capatlise = (str) => {
+    return str.slice(0, 1).toUpperCase().concat(str.slice(1))
+}
+const capatliseValues = (str) => {
+    return str.slice(0, 1).toUpperCase().concat(str.slice(1));
+}
+const increment = (n) => {
+    return n + 1
+}
+const reverse = (str) => {
+    return str.split('').reverse().join('');
+}
 
-function capitaliseObjectKeys (input) {
-  const keys = Object.keys(input);
-  const result = {};
-
-  for (var ii = 0; ii < keys.length; ii++) {
-    const capitalisedKey = keys[ii].slice(0, 1).toUpperCase().concat(keys[ii].slice(1));
-    result[capitalisedKey] = input[keys[ii]];
-  }
-
-  return result;
+const capitaliseObjectKeys = (input) => {
+    return genericKeys(input, capatlise);
 }
 
 
-function capitaliseObjectValues (input) {
-  const keys = Object.keys(input);
-  const result = {};
-
-  for (var ii = 0; ii < keys.length; ii++) {
-    const value = input[keys[ii]];
-    const capitalisedValue = value.slice(0, 1).toUpperCase().concat(value.slice(1));
-    result[keys[ii]] = capitalisedValue;
-  }
-
-  return result;
+const capitaliseObjectValues = (input) => {
+    return genericVal(input, capatliseValues);
 }
 
-function incrementObjectValues (input) {
-  const keys = Object.keys(input);
-  const result = {};
-
-  for (var ii = 0; ii < keys.length; ii++) {
-    const value = input[keys[ii]];
-    result[keys[ii]] = value + 1;
-  }
-
-  return result;
+const incrementObjectValues = (input) => {
+    return genericVal(input, increment);
 }
 
-function reverseObjectKeys (input) {
-  const keys = Object.keys(input);
-  const result = {};
+const reverseObjectKeys = (input) => {
+    return genericKeys(input, reverse);
 
-  for (var ii = 0; ii < keys.length; ii++) {
-    const reversedKey = keys[ii].split('').reverse().join('');
-    result[reversedKey] = input[keys[ii]];
-  }
-
-  return result;
 }
 
 module.exports = {
-  capitaliseObjectKeys,
-  capitaliseObjectValues,
-  incrementObjectValues,
-  reverseObjectKeys,
+    capitaliseObjectKeys,
+    capitaliseObjectValues,
+    incrementObjectValues,
+    reverseObjectKeys,
 };
