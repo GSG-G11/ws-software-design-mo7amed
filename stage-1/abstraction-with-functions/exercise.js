@@ -20,53 +20,51 @@
 'use strict';
 
 function capitaliseObjectKeys (input) {
-  const keys = Object.keys(input);
-  const result = {};
-
-  for (var ii = 0; ii < keys.length; ii++) {
-    const capitalisedKey = keys[ii].slice(0, 1).toUpperCase().concat(keys[ii].slice(1));
-    result[capitalisedKey] = input[keys[ii]];
+  const newInput = JSON.parse(JSON.stringify(input))
+  for(const key in newInput){
+    const newKey = key[0].toUpperCase() + key.slice(1)
+    newInput[newKey] = newInput[key]
+    delete newInput[key]
   }
-
-  return result;
+  return newInput;
 }
 
 
 function capitaliseObjectValues (input) {
-  const keys = Object.keys(input);
-  const result = {};
-
-  for (var ii = 0; ii < keys.length; ii++) {
-    const value = input[keys[ii]];
-    const capitalisedValue = value.slice(0, 1).toUpperCase().concat(value.slice(1));
-    result[keys[ii]] = capitalisedValue;
+  const newInput = JSON.parse(JSON.stringify(input))
+  for(const key in newInput){
+    newInput[key] = newInput[key][0].toUpperCase() + newInput[key].slice(1)
   }
-
-  return result;
+  return newInput;
 }
 
 function incrementObjectValues (input) {
-  const keys = Object.keys(input);
-  const result = {};
-
-  for (var ii = 0; ii < keys.length; ii++) {
-    const value = input[keys[ii]];
-    result[keys[ii]] = value + 1;
+  const newInput = JSON.parse(JSON.stringify(input))
+  for(const key in newInput){
+    newInput[key]++
   }
-
-  return result;
+  return newInput;
 }
 
 function reverseObjectKeys (input) {
-  const keys = Object.keys(input);
-  const result = {};
+  const newInput = {}
+  const result = Object.keys(input).map((elem) => {
+    const newKey = elem.split('').reverse().join('')
+    newInput[newKey] = input[elem]
+  })
+  return newInput;
+}
 
-  for (var ii = 0; ii < keys.length; ii++) {
-    const reversedKey = keys[ii].split('').reverse().join('');
-    result[reversedKey] = input[keys[ii]];
+// OR
+
+function reverseObjectKeys (input) {
+  const newInput = JSON.parse(JSON.stringify(input))  
+  for(const key in newInput){
+    const newKey = key.split('').reverse().join('')
+    newInput[newKey] = newInput[key]
+    delete newInput[key]
   }
-
-  return result;
+  return newInput;
 }
 
 module.exports = {
