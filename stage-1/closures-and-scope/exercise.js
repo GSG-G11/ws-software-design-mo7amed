@@ -20,7 +20,7 @@ var inc = 1;
  * increment(2); // returns 3
  */
 function increment (n) {
-  // fill in ...
+  return n +1 
 }
 
 
@@ -34,7 +34,10 @@ function increment (n) {
  * incBy2(2); // returns 4
  */
 function createIncrementer (base) {
-  // fill in ...
+  function increment (n) {
+    return base + n  
+  }
+  return increment
 }
 
 
@@ -52,7 +55,21 @@ function createIncrementer (base) {
  * counter.read() // returns 0
  */
 function createCounter () {
-  // fill in ...
+  var number = 0
+  function read(){
+    return number
+  }
+  function inc(){
+    return ++number
+  }
+  function dec(){
+    return --number
+  }
+  return{
+    read,
+    inc,
+    dec
+  }
 }
 
 
