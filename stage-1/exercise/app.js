@@ -12,12 +12,44 @@
  * you are refactoring.
  */
 'use strict';
+function generic (selector, eventType, callback){
+  document.querySelector(selector).addEventListener(eventType,callback)
+}
+
+
+
+generic('#form-unanswered','submit', (e) => {
+  e.preventDefault();
+  const form = e.target;
+  getTagValue('input[name=tags]');
+
+})
+
+function getTagValue(selectorTag) {
+  const tags = form.querySelector(selectorTag).value;
+  return tags
+}
+
+function fetch (eventTypeFetch) {
+  let xhr = new XMLHttpRequest();
+  xhr.addEventListener(eventTypeFetch,() => {
+    if (xhr.status === 200) {
+      var response = JSON.parse(xhr.responseText);
+    }
+  })
+}
+
+
+
+
 
 document.querySelector('#form-unanswered').addEventListener('submit', function (e) {
   e.preventDefault();
 
   var form = e.target;
   var tags = form.querySelector('input[name=tags]').value;
+
+
   var url  = 'https://api.stackexchange.com/2.2/questions/unanswered?order=desc&sort=activity&site=stackoverflow&tagged=' + tags;
 
   var xhr = new XMLHttpRequest();
