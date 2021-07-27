@@ -17,56 +17,48 @@
  * + When you have recognised a pattern, think about if you could make a
  *   function to encapsulate it, instead of repeating code in several places.
  */
-'use strict';
+"use strict";
 
-function capitaliseObjectKeys (input) {
+function genericFunction(input, callback) {
   const keys = Object.keys(input);
   const result = {};
+  keys.forEach(callback()); //for (var ii = 0; ii < keys.length; ii++) callback();
+  return result;
+}
 
-  for (var ii = 0; ii < keys.length; ii++) {
-    const capitalisedKey = keys[ii].slice(0, 1).toUpperCase().concat(keys[ii].slice(1));
+function capitaliseObjectKeys(input) {
+  return genericFunction(input, () => {
+    const capitalisedKey = keys[ii]
+      .slice(0, 1)
+      .toUpperCase()
+      .concat(keys[ii].slice(1));
     result[capitalisedKey] = input[keys[ii]];
-  }
-
-  return result;
+  });
 }
 
-
-function capitaliseObjectValues (input) {
-  const keys = Object.keys(input);
-  const result = {};
-
-  for (var ii = 0; ii < keys.length; ii++) {
+function capitaliseObjectValues(input) {
+  return genericFunction(input, () => {
     const value = input[keys[ii]];
-    const capitalisedValue = value.slice(0, 1).toUpperCase().concat(value.slice(1));
+    const capitalisedValue = value
+      .slice(0, 1)
+      .toUpperCase()
+      .concat(value.slice(1));
     result[keys[ii]] = capitalisedValue;
-  }
-
-  return result;
+  });
 }
 
-function incrementObjectValues (input) {
-  const keys = Object.keys(input);
-  const result = {};
-
-  for (var ii = 0; ii < keys.length; ii++) {
+function incrementObjectValues(input) {
+  return genericFunction(input, () => {
     const value = input[keys[ii]];
     result[keys[ii]] = value + 1;
-  }
-
-  return result;
+  });
 }
 
-function reverseObjectKeys (input) {
-  const keys = Object.keys(input);
-  const result = {};
-
-  for (var ii = 0; ii < keys.length; ii++) {
-    const reversedKey = keys[ii].split('').reverse().join('');
+function reverseObjectKeys(input) {
+  return genericFunction(input, () => {
+    const reversedKey = keys[ii].split("").reverse().join("");
     result[reversedKey] = input[keys[ii]];
-  }
-
-  return result;
+  });
 }
 
 module.exports = {
