@@ -22,7 +22,7 @@
 function genericFunction(input, callback) {
   const keys = Object.keys(input);
   const result = {};
-  keys.forEach(callback()); //for (var ii = 0; ii < keys.length; ii++) callback();
+  keys.forEach(callback);
   return result;
 }
 
