@@ -19,52 +19,80 @@
  */
 'use strict';
 
+function capitaliseString(string){
+  return string.slice(0, 1).toUpperCase().concat(string.slice(1));
+}
+
+function increment(n){
+  return n + 1;
+}
+
+function reverseString(string){
+  return string.split('').reverse().join('');
+}
+
+function loopObject(obj, callback){
+  const arr = Object.keys(obj);
+
+  for(let i = 0; i < arr.length; i++){
+    callback(arr[i]);
+  }
+}
+
 function capitaliseObjectKeys (input) {
-  const keys = Object.keys(input);
   const result = {};
 
-  for (var ii = 0; ii < keys.length; ii++) {
-    const capitalisedKey = keys[ii].slice(0, 1).toUpperCase().concat(keys[ii].slice(1));
-    result[capitalisedKey] = input[keys[ii]];
-  }
+  loopObject(input, function(key){
+
+    const capitalisedKey = capitaliseString(key);
+
+    result[capitalisedKey] = input[key];
+
+  });
 
   return result;
 }
 
 
 function capitaliseObjectValues (input) {
-  const keys = Object.keys(input);
   const result = {};
 
-  for (var ii = 0; ii < keys.length; ii++) {
-    const value = input[keys[ii]];
-    const capitalisedValue = value.slice(0, 1).toUpperCase().concat(value.slice(1));
-    result[keys[ii]] = capitalisedValue;
-  }
+  loopObject(input, function(key){
+
+    const capitalisedValue = capitaliseString(input[key]);
+
+    result[key] = capitalisedValue;
+
+  });
 
   return result;
 }
 
 function incrementObjectValues (input) {
-  const keys = Object.keys(input);
   const result = {};
 
-  for (var ii = 0; ii < keys.length; ii++) {
-    const value = input[keys[ii]];
-    result[keys[ii]] = value + 1;
-  }
+
+  loopObject(input, function(key){
+
+    const val = input[key];
+
+    result[key] = increment(val);
+
+  });
 
   return result;
 }
 
 function reverseObjectKeys (input) {
-  const keys = Object.keys(input);
   const result = {};
 
-  for (var ii = 0; ii < keys.length; ii++) {
-    const reversedKey = keys[ii].split('').reverse().join('');
-    result[reversedKey] = input[keys[ii]];
-  }
+  loopObject(input, function(key){
+
+    const reversedKey = reverseString(key);
+
+    result[reversedKey] = input[key];
+
+  });
 
   return result;
 }
