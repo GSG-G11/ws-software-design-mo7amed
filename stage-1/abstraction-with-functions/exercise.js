@@ -31,7 +31,7 @@ function reverseString(string){
   return string.split('').reverse().join('');
 }
 
-function loopObject(obj, callback){
+function loopObjectKeys(obj, callback){
   const arr = Object.keys(obj);
 
   for(let i = 0; i < arr.length; i++){
@@ -42,7 +42,7 @@ function loopObject(obj, callback){
 function capitaliseObjectKeys (input) {
   const result = {};
 
-  loopObject(input, function(key){
+  loopObjectKeys(input, function(key){
 
     const capitalisedKey = capitaliseString(key);
 
@@ -57,7 +57,7 @@ function capitaliseObjectKeys (input) {
 function capitaliseObjectValues (input) {
   const result = {};
 
-  loopObject(input, function(key){
+  loopObjectKeys(input, function(key){
 
     const capitalisedValue = capitaliseString(input[key]);
 
@@ -72,7 +72,7 @@ function incrementObjectValues (input) {
   const result = {};
 
 
-  loopObject(input, function(key){
+  loopObjectKeys(input, function(key){
 
     const val = input[key];
 
@@ -86,7 +86,7 @@ function incrementObjectValues (input) {
 function reverseObjectKeys (input) {
   const result = {};
 
-  loopObject(input, function(key){
+  loopObjectKeys(input, function(key){
 
     const reversedKey = reverseString(key);
 

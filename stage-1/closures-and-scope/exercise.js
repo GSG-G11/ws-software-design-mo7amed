@@ -34,7 +34,7 @@ function increment (n) {
  * incBy2(2); // returns 4
  */
 function createIncrementer (base) {
-  return function a(n){
+  return function(n){
     return base + n;
   }
 }
